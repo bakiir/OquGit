@@ -18,21 +18,21 @@ public class TaskService {
     //crud
 
     //create
-    public Task createLesson(Task lesson){
+    public Task createTask(Task lesson){
         return taskRepo.save(lesson);
     }
 
     //read
 
-    public List<Task> getLessons(){
+    public List<Task> getTasks(){
         return taskRepo.findAll();
     }
-    public Task getOneLesson(Long id){
+    public Task getOneTask(Long id){
        return taskRepo.findById(id).orElse(new Task());
     }
 
    //update
-    public Task updateLesson(Long id, Task task){
+    public Task updateTask(Long id, Task task){
        Task taskDb = taskRepo.findById(id).orElse(new Task());
        task.setId(taskDb.getId());
        return taskRepo.save(task);
@@ -40,7 +40,7 @@ public class TaskService {
 
 
    //delete
-   public void deleteLesson(Long id){
+   public void deleteTask(Long id){
         taskRepo.deleteById(id);
     }
 

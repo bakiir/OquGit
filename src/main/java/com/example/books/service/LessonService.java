@@ -14,8 +14,6 @@ public class LessonService {
 
     private final LessonRepo lessonRepo;
 
-    //crud
-
     //create
     public Lesson createLesson(Lesson lesson){
         return lessonRepo.save(lesson);
