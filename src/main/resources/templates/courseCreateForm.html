@@ -7,6 +7,32 @@
 
 <div layout:fragment="mainFragment">
     form for creating course here
+
+    <form action="/courses/create" th:object="${course}" th:method="post">
+
+        <label>Title</label>
+        <input type="text" th:field="*{title}">
+
+        <label> Type </label>
+        <select th:field="*{category}">
+            <option th:each="c : ${categories}" th:value="${c.getId()}" th:text="${c.name}"></option>
+        </select>
+
+        <label> Description </label>
+        <input type="text" th:field="*{description}">
+
+
+        <label> Instructor </label>
+        <input type="text" th:field="*{instructor}">
+
+        <label>Price</label>
+        <input type="text" th:field="*{price}">
+
+
+
+        <button type="submit">Create</button>
+
+    </form>
 </div>
 
 </html>

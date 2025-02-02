@@ -1,6 +1,8 @@
 package com.example.books.controller;
 
+import com.example.books.model.Category;
 import com.example.books.model.Course;
+import com.example.books.service.CategoryService;
 import com.example.books.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,18 +17,21 @@ import java.util.List;
 public class CourseController {
 
     private final CourseService courseService;
+    private final CategoryService CategoryService;
 
     //create
     @GetMapping(value = "/create")
     String  redToCreateForm(Model model){
+        List<Category> categories = CategoryService.getall();
         model.addAttribute("course", new Course());
+        model.addAttribute("categories", categories);
         return "courseCreateForm";
     }
 
-    @PostMapping()
+    @PostMapping("/create")
     String createCourse(@ModelAttribute Course course){
         courseService.createCourse(course);
-        return "redirect:courses";
+        return "redirect:/courses";
     }
 
     // read

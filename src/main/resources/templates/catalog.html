@@ -6,6 +6,22 @@
 
 <div layout:fragment="mainFragment">
         catalog here
+
+        <div th:each="r: ${cources}" th:class="card" th:bgcolor="grey">
+                <a th:text="${r.category.getName()}" th:class="member-name-link"></a>
+                <h2 th:text="${r.title}"></h2>
+
+                <label>Instructor</label>
+                <p th:text="${r.instructor}"></p>
+
+                <label> Description </label>
+                <p th:text="${r.description}"></p>
+
+                <label>Price</label>
+                <p th:text="${r.price}"></p>
+
+
+        </div>
 </div>
 
 </html>

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JoinColumnOrFormula;
+import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import java.util.List;
 
@@ -16,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Course {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -31,6 +34,10 @@ public class Course {
     private double price;
 
     private boolean isPublished;
+
+   @ManyToOne
+   @JoinColumn(name = "category_id", nullable = false)
+   private Category category;
 
     @ElementCollection
     private List<String> modules;
