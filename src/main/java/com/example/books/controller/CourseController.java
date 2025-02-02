@@ -11,7 +11,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/cources")
+@RequestMapping("/courses")
 public class CourseController {
 
     private final CourseService courseService;
@@ -20,7 +20,7 @@ public class CourseController {
     @GetMapping(value = "/create")
     String  redToCreateForm(Model model){
         model.addAttribute("course", new Course());
-        return "redirect:courseCreateForm";
+        return "courseCreateForm";
     }
 
     @PostMapping()
