@@ -7,7 +7,46 @@
 
 
 <div layout:fragment="mainFragment">
-    course here
+
+    <div th:object="${course}" th:class="card" th:bgcolor="grey">
+
+        <form th:action="@{'/courses/'+${course.id}}" th:method="post">
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit">Delete course</button>
+        </form>
+
+        <a th:text="${course.category.getName()}" th:class="member-name-link"></a>
+        <h2 th:text="${course.title}"></h2>
+
+
+
+        <label>Instructor</label>
+        <p th:text="${course.instructor}"></p>
+
+        <label> Description </label>
+        <p th:text="${course.description}"></p>
+
+        <label>Price</label>
+        <p th:text="${course.price}"></p>
+
+        <h3>Modules</h3>
+        <div th:each="m: ${modules}">
+            <p th:text="${m.name}">;
+
+        </div>
+
+        <form th:action="@{'/courses/'+${course.getId()}+'/modules'}" th:method="get">
+            <button type="submit">Manage course's modules</button>
+        </form>
+
+
+
+
+
+
+
+    </div>
+
 </div>
 
 </html>

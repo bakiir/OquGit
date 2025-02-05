@@ -39,8 +39,6 @@ public class Course {
    @JoinColumn(name = "category_id", nullable = false)
    private Category category;
 
-    @ElementCollection
-    private List<String> modules;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Lesson> lessons;

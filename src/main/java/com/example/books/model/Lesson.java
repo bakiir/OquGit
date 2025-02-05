@@ -23,17 +23,16 @@ public class Lesson {
 
     private String videoURL;
 
-    @Column(length = 2000)
-    private String description;
 
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    private int index;
+    @ManyToOne
+    @JoinColumn(name = "module_id")
+    private Module module;
 
-    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
-    private List<Task> tasks;
+
 
 
 

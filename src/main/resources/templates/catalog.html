@@ -20,6 +20,9 @@
                 <label>Price</label>
                 <p th:text="${r.price}"></p>
 
+                <a th:href="@{'/courses/'+${r.id}}">More</a>
+                <a th:href="@{'/courses/'+${r.id}+'/update'/}">Update</a>
+
 
         </div>
 </div>

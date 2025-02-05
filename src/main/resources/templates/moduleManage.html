@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/main.html">
+
+<head>
+    <title>Module Management</title>
+</head>
+<body>
+<div layout:fragment="mainFragment">
+    <h3>Modules</h3>
+    <div th:if="${modules != null and #lists.size(modules) > 0}">
+        <div th:each="m : ${modules}">
+            <p th:text="${m.name}">Module Name</p>
+
+            <form th:action="@{'/modules/'+${m.id}}" th:method="post">
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit">Delete module</button>
+            </form>
+        </div>
+    </div>
+
+    <div th:if="${modules == null or #lists.size(modules) == 0}">No Modules</div>
+
+    <h3>Add New Module</h3>
+
+    <form th:action="@{
+            '/courses/'+  ${modules.get(0).getCourse().id}  + '/addModule'}"
+          th:object="${module}" method="post">
+        <input type="text" th:field="*{name}" placeholder="Title of module" required>
+        <button type="submit">Add new module</button>
+    </form>
+</div>
+</body>
+</html>
