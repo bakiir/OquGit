@@ -16,8 +16,19 @@
     </form>
 </div>
 <ul>
-    <li th:each="m : ${course.modules}" th:text="${m.name}">
+    <li th:each="m : ${course.modules}">
+        <div>
+            <a th:text="${m.name}"></a>
+            <form th:action="@{'/modules/'+${m.id}}" th:method="post">
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit" class="btn btn-danger btn-sm">Delete module</button>
+            </form>
 
+            <form th:action="@{'/modules/'+${m.id}}" th:method="get">
+                <button type="submit" class="btn btn-primary">Change module</button>
+            </form>
+
+        </div>
     </li>
 
 </ul>

@@ -1,19 +1,22 @@
-package com.example.books.model;
+package com.example.books.model.task;
 
+import com.example.books.model.Course;
+import com.example.books.model.Module;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Lesson {
+public class Test {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,12 +24,14 @@ public class Lesson {
 
     private String title;
 
-    private String URL;
+    private LocalDate deadline;
+    private int tries;
+    private Float grade;
+    private Float mark;
 
+    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Question> questions;
 
-    @ManyToOne
-    @JoinColumn(name = "course_id", nullable = false)
-    private Course course;
 
     @ManyToOne
     @JoinColumn(name = "module_id")
