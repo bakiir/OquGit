@@ -1,52 +1,37 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="layout/main.html">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Course Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
 
+<h2 th:text="${course.title}">Course Title</h2>
+<p th:text="${course.description}">Course Description</p>
 
-
-<div layout:fragment="mainFragment">
-
-    <div th:object="${course}" th:class="card" th:bgcolor="grey">
-
-        <form th:action="@{'/courses/'+${course.id}}" th:method="post">
-            <input type="hidden" name="_method" value="delete">
-            <button type="submit">Delete course</button>
-        </form>
-
-        <a th:text="${course.category.getName()}" th:class="member-name-link"></a>
-        <h2 th:text="${course.title}"></h2>
-
-
-
-        <label>Instructor</label>
-        <p th:text="${course.instructor}"></p>
-
-        <label> Description </label>
-        <p th:text="${course.description}"></p>
-
-        <label>Price</label>
-        <p th:text="${course.price}"></p>
-
-        <h3>Modules</h3>
-        <div th:each="m: ${modules}">
-            <p th:text="${m.name}">;
-
-        </div>
-
-        <form th:action="@{'/courses/'+${course.getId()}+'/modules'}" th:method="get">
-            <button type="submit">Manage course's modules</button>
-        </form>
-
-
-
-
-
-
-
-    </div>
-
+<h3>Modules</h3>
+<div>
+    <form th:action="@{${course.id}+'/modules'}" th:method="get">
+        <button type="submit">Manage module</button>
+    </form>
 </div>
+<ul>
+    <li th:each="m : ${course.modules}" th:text="${m.name}">
 
+    </li>
+
+</ul>
+
+<h3>Add Module</h3>
+<form th:action="@{/courses/{courseId}/modules(courseId=${course.id})}" method="post" th:object="${module}">
+    <div class="mb-3">
+        <label for="name" class="form-label">Module Name</label>
+        <input type="text" id="name" name="name" class="form-control" th:field="*{name}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Module</button>
+</form>
+
+<a href="/courses" class="btn btn-secondary mt-3">Back to Courses</a>
+
+</body>
 </html>

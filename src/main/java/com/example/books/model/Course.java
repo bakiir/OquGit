@@ -35,6 +35,14 @@ public class Course {
 
     private boolean isPublished;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course", orphanRemoval = true)
+    private List<Module> modules;
+
+    public void addModule(Module module) {
+        modules.add(module);
+        module.setCourse(this); // Ensure bidirectional mapping
+    }
+
    @ManyToOne
    @JoinColumn(name = "category_id", nullable = false)
    private Category category;

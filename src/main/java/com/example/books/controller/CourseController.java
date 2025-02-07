@@ -30,7 +30,7 @@ public class CourseController {
     //create
     @GetMapping(value = "/create")
     String  redToCreateForm(Model model){
-        List<Category> categories = CategoryService.getall();
+        List<Category> categories = CategoryService.getallCategories();
         model.addAttribute("course", new Course());
         model.addAttribute("categories", categories);
         return "courseCreateForm";
@@ -50,29 +50,16 @@ public class CourseController {
         return "catalog";
     }
 
-    @GetMapping(value = "/{id}")
-    String getOne(@PathVariable Long id, Model model){
-        Course course = courseService.getOne(id);
-        List<Module> modules = moduleService.getAllByCourseId(id);
-        model.addAttribute("modules", modules);
-        model.addAttribute("course",course);
+    @GetMapping("/{courseId}")
+    public String getCourse(@PathVariable Long courseId, Model model) {
+        Course course = courseService.getOne(courseId);
+        model.addAttribute("course", course);
+        model.addAttribute("module", new Module()); // For form submission
         return "course";
     }
 
 
-    //update
-    @GetMapping(value = "/update/{id}")
-    String  redUpdateForm(Model model, @PathVariable Long id){
-        Course course = courseService.getOne(id);
-        model.addAttribute("course", course);
-        return "redirect:courseCreateForm";
-    }
 
-    @PutMapping(value = "/{id}")
-    String updateCourse (@ModelAttribute Course course){
-        courseService.udateCourse(course.getId(), course);
-        return  "redirect:course";
-    }
 
     //delete
     @DeleteMapping(value = "{id}")
@@ -83,20 +70,19 @@ public class CourseController {
 
 
 
-    @PostMapping(value = "/{id}/addModule")
-    String addModule(@PathVariable Long id, @ModelAttribute Module module){
-        Course course = courseService.getOne(id);
-        Module mod = new Module();
-        mod.setCourse(course);
-        mod.setName(module.getName());
-        moduleService.addModule(mod);
-        return "redirect:/courses/"+id;
+    @PostMapping("/{courseId}/modules")
+    public String addModule(@PathVariable Long courseId,
+                            @ModelAttribute Module module
+    ) {
+        Course updatedCourse = courseService.addModuleToCourse(courseId, module);
+        return "redirect:/courses/" + courseId;
+
     }
 
     @GetMapping(value = "/{id}/modules")
     String addModule(@PathVariable Long id, Model model){
         List<Module> modules = moduleService.getAllByCourseId(id);
-        model.addAttribute("module", new Module());
+        model.addAttribute("newModule", new Module());
         model.addAttribute("modules", modules);
         return "moduleManage";
     }

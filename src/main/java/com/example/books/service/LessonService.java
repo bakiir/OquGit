@@ -21,10 +21,10 @@ public class LessonService {
 
     //read
 
-    public List<Lesson> getLessons(){
+    public List<Lesson> getAllLessons(){
         return lessonRepo.findAll();
     }
-   public Lesson getOneLesson(Long id){
+   public Lesson getLessonById(Long id){
        return lessonRepo.findById(id).orElse(new Lesson());
    }
 

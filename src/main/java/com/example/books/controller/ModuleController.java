@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,12 +22,29 @@ public class ModuleController {
 
     @DeleteMapping(value = "/{id}")
     String delete(@PathVariable Long id, Model model){
+
+        Module module = moduleService.getOne(id);
+
+        if (module == null || module.getCourse() == null) {
+            // Если модуль не найден или не привязан к курсу, перенаправляем пользователя на страницу списка курсов
+            return "redirect:/courses";
+        }
+
         Long  courseId = moduleService.getOne(id).getCourse().getId();
+        model.addAttribute("module", new Module());
+
+
+
         moduleService.deleteModule(id);
-//        List<Module> modules = moduleService.getAllByCourseId(courseId);
-//        model.addAttribute("modules", modules);
-//        model.addAttribute("module", new Module());
-        return "redirect:moduleManage";
+        List<Module> modules = moduleService.getAllByCourseId(courseId);
+        model.addAttribute("modules", modules);
+
+        return "moduleManage";
 
     }
+
+
+
 }
+
+

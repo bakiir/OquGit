@@ -19,7 +19,7 @@ public class Module {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
 
