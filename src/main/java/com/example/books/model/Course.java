@@ -48,7 +48,6 @@ public class Course {
    private Category category;
 
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private List<Lesson> lessons;
+
 
 }

@@ -8,22 +8,45 @@
     <title>Module Management</title>
 </head>
 <body>
-<div layout:fragment="mainFragment">
-    <h3>Modules</h3>
-    <div th:if="${modules != null and #lists.size(modules) > 0}">
-        <div th:each="m : ${modules}">
-            <p th:text="${m.name}">Module Name</p>
+    <div layout:fragment="mainFragment">
+        <form method="POST"
+              th:action="@{/modules/{id}/addLesson(id=${module.id})}" enctype="multipart/form-data">
+<!--              th:object="lesson"-->
 
-            <form th:action="@{'/modules/'+${m.id}}" th:method="post">
-                <input type="hidden" name="_method" value="delete">
-                <button type="submit">Delete module</button>
+                <input type="text" name="title" th:field="*{lesson.title}" placeholder="File Title" required />
+                <input type="file" name="file" required />
+
+                <button type="submit">Upload</button>
             </form>
-        </div>
+
+        <h2>Uploaded files</h2>
+        <ul>
+            <li th:each="l : ${lessons}">
+
+
+                <div class="container">
+                    <div>
+                        <video width="320" height="150" controls>
+                            <source th:src="'http://localhost:8080/' + ${l.URL}" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <div>
+                        <strong th:text="${l.title}"></strong>
+
+                        <form th:action="@{'/lessons/'+${l.id}}" th:method="post">
+                            <input type="hidden" name="_method" value="delete">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete module</button>
+                        </form>
+                    </div>
+                </div>
+
+            </li>
+        </ul>
+
+
+
+
     </div>
-
-    <div th:if="${modules == null or #lists.size(modules) == 0}">No Modules</div>
-
-
-</div>
 </body>
 </html>

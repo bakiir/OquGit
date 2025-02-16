@@ -22,11 +22,10 @@ public class Lesson {
     private String title;
 
     private String URL;
+    private String type;
 
 
-    @ManyToOne
-    @JoinColumn(name = "course_id", nullable = false)
-    private Course course;
+
 
     @ManyToOne
     @JoinColumn(name = "module_id")

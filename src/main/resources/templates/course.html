@@ -10,11 +10,7 @@
 <p th:text="${course.description}">Course Description</p>
 
 <h3>Modules</h3>
-<div>
-    <form th:action="@{${course.id}+'/modules'}" th:method="get">
-        <button type="submit">Manage module</button>
-    </form>
-</div>
+
 <ul>
     <li th:each="m : ${course.modules}">
         <div>
